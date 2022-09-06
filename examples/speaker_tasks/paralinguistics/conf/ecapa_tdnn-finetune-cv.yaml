@@ -1,0 +1,103 @@
+name: "FAE-finetune-CV"
+
+# Fetch the pretrained model ecapa_tdnn optimized for speaker sepration.
+init_from_pretrained_model:
+  speaker_tasks:
+    name: "ecapa_tdnn"
+    include: ["preprocessor", "encoder"]
+    exclude: ["decoder.final"]
+
+model:
+  sample_rate: 16000
+
+  train_ds:
+    manifest_filepath: ???
+    sample_rate: ${model.sample_rate}
+    labels: null
+    batch_size: 64
+    shuffle: True
+    augmentor:
+      speed:
+        prob: 0.5
+        sr: ${model.sample_rate}
+        resample_type: "kaiser_fast"
+        min_speed_rate: 0.95
+        max_speed_rate: 1.05
+
+  validation_ds:
+    manifest_filepath: ???
+    sample_rate: ${model.sample_rate}
+    labels: null
+    batch_size: 128
+    shuffle: False
+
+  test_ds:
+    manifest_filepath: ???
+    sample_rate: ${model.sample_rate}
+    labels: null
+    batch_size: 128
+    shuffle: False
+
+  preprocessor:
+    _target_: nemo.collections.asr.modules.AudioToMelSpectrogramPreprocessor
+    normalize: "per_feature"
+    window_size: 0.025
+    sample_rate: ${model.sample_rate}
+    window_stride: 0.01
+    window: "hann"
+    features: 80
+    n_fft: 512
+    frame_splicing: 1
+    dither: 0.00001
+    stft_conv: false
+
+  encoder:
+    _target_: nemo.collections.asr.modules.ECAPAEncoder
+    feat_in: ${model.preprocessor.features}
+    filters: [1024, 1024, 1024, 1024, 3072]
+    kernel_sizes: [5, 3, 3, 3, 1]
+    dilations: [1, 1, 1, 1, 1]
+    scale: 8
+
+  decoder:
+    _target_: nemo.collections.asr.modules.SpeakerDecoder
+    feat_in: 3072
+    num_classes: ???
+    pool_mode: "attention" #xvector,tap or attention
+    emb_sizes: 192
+    angular: True
+
+  loss:
+    scale: 30
+    margin: 0.2
+
+  optim:
+    name: adamw
+    lr: 0.00001
+    weight_decay: 0.0002
+
+    # scheduler setup
+    sched:
+      name: CosineAnnealing
+      warmup_ratio: 0.5
+      min_lr: 0
+
+trainer:
+  devices: 1 # number of gpus (trained on four nodes - each node has 8 gpus)
+  max_epochs: 5
+  max_steps: -1 # computed at runtime if not set
+  num_nodes: 1
+  accelerator: gpu
+  strategy: ddp
+  accumulate_grad_batches: 1
+  deterministic: False
+  enable_checkpointing: False
+  logger: False
+  log_every_n_steps: 1 # Interval of logging.
+  val_check_interval: 1.0 # Set to 0.25 to check 4 times per epoch, or an int for number of iterations
+
+exp_manager:
+  exp_dir: /data1/nemo_experiments/tb
+  name: ${name}
+  create_tensorboard_logger: True
+  create_checkpoint_callback: True
