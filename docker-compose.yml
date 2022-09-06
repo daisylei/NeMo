@@ -3,7 +3,7 @@ services:
   myNeMo:
     build: ./
     command: script -c 'python -m pip install tensorboardX crc32c soundfile && tensorboard --logdir=${PATH_NEMO_EXPERIMENTS}/ & /workspace/nemo/start-jupyter.sh' -f /dev/stdout
-    image: NeMo/fae/cv22:latest
+    image: nemo/fae/cv22:latest
     volumes:
       - ${PATH_LDC}:/n/LDC/:ro # this exposes the corpora as read-only
       - ${PATH_CORPORA}:/n/corpora/:ro # this exposes the corpora as read-only
