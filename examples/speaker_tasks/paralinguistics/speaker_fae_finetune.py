@@ -12,6 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# speaker_reco_finetune.py 
+#   --config-path=conf/ 
+#   --config-name=ecapa_tdnn_finetune-cv.yaml 
+#     model.train_ds.manifest_filepath=nemo_experiments/220823-Finetune-CV-validated/220825-Finetune-CV-eval/train-80-dlei-manifest.json 
+#     model.train_ds.augmentor.speed.prob=0.5 
+#     model.validation_ds.manifest_filepath=nemo_experiments/220823-Finetune-CV-validated/220825-Finetune-CV-eval/dev-80-dlei-manifest.json 
+#     model.test_ds.manifest_filepath=nemo_experiments/220823-Finetune-CV-validated/220825-Finetune-CV-eval/eval1-within-labels-dlei-manifest.json 
+#     trainer.max_epochs=5 
+#     trainer.devices='[1]' 
+#     model.decoder.num_classes=12 
+#     model.train_ds.batch_size=32
+#
+#  Manifests look like:
+#  { "audio_filepath": "", 
+#    "offset": 0, 
+#    "duration": 0, 
+#    "label": "" }
+#
+#
+#
 import pytorch_lightning as pl
 from omegaconf import OmegaConf
 from pytorch_lightning import seed_everything
