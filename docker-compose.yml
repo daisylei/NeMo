@@ -1,25 +1,16 @@
 version: "3.8"
 services:
-  myNeMo:
+  faeNeMo:
     build: ./
-    command: script -c 'python -m pip install tensorboardX crc32c soundfile && tensorboard --logdir=${PATH_NEMO_EXPERIMENTS}/ & /workspace/nemo/start-jupyter.sh' -f /dev/stdout
+    command: script -c 'python -m pip install tensorboardX crc32c soundfile && tensorboard --logdir=/workspace/nemo/nemo_experiments/ & /workspace/nemo/start-jupyter.sh' -f /dev/stdout
     image: nemo/fae/cv22:latest
+    network_mode: host
     volumes:
-      - ${PATH_LDC}:/n/LDC/:ro # this exposes the corpora as read-only
-      - ${PATH_CORPORA}:/n/corpora/:ro # this exposes the corpora as read-only
-      - ${PATH_NEMO_EXPERIMENTS}:/data/nemo_experiments # nemo-experiments (space shared with other contributors)
+      - ${PATH_NEMO_EXPERIMENTS}:/workspace/nemo/nemo_experiments # nemo-experiments (space shared with other contributors)
+      - ${PATH_CV_CORPORA}:/corpora:ro
     ports:
       - ${PORT_JUPY}:8888 # this is jupyter notebook
       - ${PORT_TBRD}:6006 # tensorboard
     networks:
       - interactions
     restart: always
-
-networks:
-  interactions:
-    driver: bridge
-    name: interactions
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.19.58.0/24
