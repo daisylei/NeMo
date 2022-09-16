@@ -97,7 +97,7 @@ trainer:
   val_check_interval: 1.0 # Set to 0.25 to check 4 times per epoch, or an int for number of iterations
 
 exp_manager:
-  exp_dir: /data1/nemo_experiments/tb
+  exp_dir: /workspace/nemo_experiments
   name: ${name}
   create_tensorboard_logger: True
   create_checkpoint_callback: True
