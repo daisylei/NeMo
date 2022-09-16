@@ -6,11 +6,9 @@ services:
     image: nemo/fae/cv22:latest
     network_mode: host
     volumes:
-      - ${PATH_NEMO_EXPERIMENTS}:/workspace/nemo/nemo_experiments # nemo-experiments (space shared with other contributors)
+      - ${PATH_NEMO_EXPERIMENTS}:/workspace/nemo_experiments # nemo-experiments (space shared with other contributors)
       - ${PATH_CV_CORPORA}:/corpora:ro
     ports:
       - ${PORT_JUPY}:8888 # this is jupyter notebook
       - ${PORT_TBRD}:6006 # tensorboard
-    networks:
-      - interactions
     restart: always
