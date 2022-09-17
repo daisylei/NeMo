@@ -3,10 +3,10 @@
 ## Performance
 |       Test metric         | FAE-CV22 test (eval.tsv) | FAE-CV22 eval (eval0.tsv) |
 |:-------------------------:|:------------------------:|:-------------------------:|
-|     test_acc_macro        | 0.4180358350276947       | 0.3351203203201294        |
-|      test_auroc           | 0.8158841729164124       | 0.7418038249015808        |
-| test_epoch_accuracy_top@1 | 0.4737991392612457       | 0.4175257682800293        |
-|       test_loss           | 7.080672264099121        | 8.503963470458984         |
+|     test_acc_macro        | 0.418                    | 0.335                     |
+|      test_auroc           | 0.816                    | 0.742                     |
+| test_epoch_accuracy_top@1 | 0.474                    | 0.418                     |
+|       test_loss           | 7.081                    | 8.504                     |
 
 
 ### Fine Tuning
