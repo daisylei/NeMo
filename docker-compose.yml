@@ -2,7 +2,7 @@ version: "3.8"
 services:
   faeNeMo:
     build: ./
-    command: script -c 'python -m pip install tensorboardX crc32c soundfile && tensorboard --logdir=/workspace/nemo_experiments/ & /workspace/nemo/start-jupyter.sh' -f /dev/stdout
+    command: script -c 'python -m pip install tensorflow tensorboard==2.8.0 crc32c soundfile && tensorboard --logdir=/workspace/nemo_experiments/ & /workspace/nemo/start-jupyter.sh' -f /dev/stdout
     image: nemo/fae/cv22:latest
     network_mode: host
     volumes:
