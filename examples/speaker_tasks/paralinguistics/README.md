@@ -1,13 +1,13 @@
 # Speaker Foreign Accent Recognition
 
 ## Performance
-|       Test metric         | FAE-CV22 test (test.tsv) | FAE-CV22 eval (eval.tsv)  |
-|:-------------------------:|:------------------------:|:-------------------------:|
-|     test_acc_macro        | 0.418                    | 0.335                     |
-|      test_auroc           | 0.816                    | 0.742                     |
-| test_epoch_accuracy_top@1 | 0.474                    | 0.418                     |
-|       test_loss           | 7.081                    | 8.504                     |
-
+| **Accuracy** | **FAE-CV<br>test<br>ECAPA** | **FAE-CV<br>test<br>TitaNet** | **FAE-CV<br>eval<br>ECAPA** | **FAE-CV<br>eval<br>TitaNet** |
+|:------------:|:---------------------------:|:-----------------------------:|:---------------------------:|:-----------------------------:|
+| macro@1best  | 42%                         | 51%                           | 34%                         | 37%                           |
+| macro@2best  | 62%                         | 71%                           | 54%                         | 63%                           |
+| micro@1best  | 46%                         | 53%                           | 39%                         | 40%                           |
+| micro@2best  | 65%                         | 73%                           | 55%                         | 59%                           |
+| auroc        | 0.82                        |                               | 0.74                        |                               |
 
 ### Fine Tuning
 For fine tuning on a pretrained .nemo speaker recognition model,
