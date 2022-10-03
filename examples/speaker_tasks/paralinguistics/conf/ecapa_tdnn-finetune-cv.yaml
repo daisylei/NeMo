@@ -1,4 +1,4 @@
-name: "FAE-finetune-CV"
+name: "FAE-ecapa-finetune-CV"
 
 # Fetch the pretrained model ecapa_tdnn optimized for speaker sepration.
 init_from_pretrained_model:
