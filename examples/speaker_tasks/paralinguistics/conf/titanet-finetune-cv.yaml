@@ -154,7 +154,7 @@ trainer:
   num_nodes: 1
   accelerator: gpu
   strategy: ddp
-  deterministic: True
+  deterministic: False
   enable_checkpointing: False
   logger: False
   log_every_n_steps: 1  # Interval of logging.
